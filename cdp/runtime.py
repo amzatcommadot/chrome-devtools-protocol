@@ -531,7 +531,7 @@ class ExecutionContextDescription:
             id_=ExecutionContextId.from_json(json['id']),
             origin=str(json['origin']),
             name=str(json['name']),
-            unique_id=str(json['uniqueId']),
+            unique_id=str(json['uniqueId'] if json.get('uniqueId') is not None else ''),
             aux_data=dict(json['auxData']) if json.get('auxData', None) is not None else None,
         )
 
@@ -1509,7 +1509,7 @@ class ExecutionContextDestroyed:
     def from_json(cls, json: T_JSON_DICT) -> ExecutionContextDestroyed:
         return cls(
             execution_context_id=ExecutionContextId.from_json(json['executionContextId']),
-            execution_context_unique_id=str(json['executionContextUniqueId'])
+            execution_context_unique_id=str(json['executionContextUniqueId'] if 'executionContextUniqueId' in json else '')
         )
 
 
