@@ -97,7 +97,7 @@ class TargetInfo:
             title=str(json['title']),
             url=str(json['url']),
             attached=bool(json['attached']),
-            can_access_opener=bool(json['canAccessOpener']),
+            can_access_opener=bool(json.get('canAccessOpener', False)),
             opener_id=TargetID.from_json(json['openerId']) if json.get('openerId', None) is not None else None,
             opener_frame_id=page.FrameId.from_json(json['openerFrameId']) if json.get('openerFrameId', None) is not None else None,
             browser_context_id=browser.BrowserContextID.from_json(json['browserContextId']) if json.get('browserContextId', None) is not None else None,
