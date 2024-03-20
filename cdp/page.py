@@ -535,14 +535,14 @@ class Frame:
     def from_json(cls, json: T_JSON_DICT) -> Frame:
         return cls(
             id_=FrameId.from_json(json['id']),
-            loader_id=network.LoaderId.from_json(json['loaderId']),
+            loader_id=network.LoaderId.from_json(json['loaderId']) if json.get('loaderId', None) is not None else None,
             url=str(json['url']),
-            domain_and_registry=str(json['domainAndRegistry']),
+            domain_and_registry=str(json.get('domainAndRegistry', '')),
             security_origin=str(json['securityOrigin']),
             mime_type=str(json['mimeType']),
-            secure_context_type=SecureContextType.from_json(json['secureContextType']),
-            cross_origin_isolated_context_type=CrossOriginIsolatedContextType.from_json(json['crossOriginIsolatedContextType']),
-            gated_api_features=[GatedAPIFeatures.from_json(i) for i in json['gatedAPIFeatures']],
+            secure_context_type=SecureContextType.from_json(json['secureContextType']) if json.get('secureContextType', None) is not None else None,
+            cross_origin_isolated_context_type=CrossOriginIsolatedContextType.from_json(json['crossOriginIsolatedContextType']) if json.get('crossOriginIsolatedContextType', None) is not None else None,
+            gated_api_features=[GatedAPIFeatures.from_json(i) for i in json['gatedAPIFeatures']] if json.get('gatedAPIFeatures', None) is not None else None,
             parent_id=FrameId.from_json(json['parentId']) if json.get('parentId', None) is not None else None,
             name=str(json['name']) if json.get('name', None) is not None else None,
             url_fragment=str(json['urlFragment']) if json.get('urlFragment', None) is not None else None,
@@ -2924,7 +2924,7 @@ class FrameNavigated:
     def from_json(cls, json: T_JSON_DICT) -> FrameNavigated:
         return cls(
             frame=Frame.from_json(json['frame']),
-            type_=NavigationType.from_json(json['type'])
+            type_=NavigationType.from_json(json['type']) if json.get('type') else None
         )
 
 
